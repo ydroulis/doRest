@@ -41,7 +41,8 @@ export function ChallengesProvider({
 
     const [activeChallenge, setActiveChallenge] = useState(null)
     const [isLevelUpModalOpen, setIsLevelUpModalOpen] = useState(false)
-
+    
+    
     const experienceToNextLevel = Math.pow((level + 1) * 4, 2)
 
     useEffect(() => {
@@ -49,6 +50,7 @@ export function ChallengesProvider({
     }, [])
 
     useEffect(() => {
+        Cookies.set('level', String(level));
         Cookies.set('currentExperience', String(currentExperience));
         Cookies.set('challengesCompleted', String(challengesCompleted));
     }, [level, currentExperience, challengesCompleted]);
@@ -90,7 +92,7 @@ export function ChallengesProvider({
 
         let finalExperience = currentExperience + amount
 
-        if (finalExperience > experienceToNextLevel) {
+        if (finalExperience >= experienceToNextLevel) {
             finalExperience = finalExperience - experienceToNextLevel;
             levelUp();
         }
